@@ -1,3 +1,6 @@
+from importlib.metadata import files
+from sys import modules
+
 name = "Maciej :)"
 age = 23
 birthday = 2002
@@ -188,6 +191,160 @@ summerize = 0
 for number in numbers:
     summerize += number
 print(summerize)
+
+#------------------------------------------------
+#While loops
+
+number = 2
+
+# while number < 8:
+#     print(number)
+#     number += 1
+# else:
+#     print("End of list")
+
+while number < 8:
+    if number % 2 == 0:
+        print(number)
+        number += 1
+    else:
+        break
+
+#------------------------------------------------
+# Functions
+
+def greeting():
+    print("Hello")
+
+greeting()
+
+def func(name, age = 0):
+    print(f"Hello, {name}. You are {age} years old.")
+    if age < 1:
+        print("I don't know your age.")
+
+func(name="Jamal", age=23)
+func(name="Maciej")
+
+def age_checker(your_age):
+    return your_age >= 18
+result = age_checker(35)
+print(result)
+
+#------------------------------------------------
+# creating modules
+
+# from calculator import add
+import calculator
+
+calculator.add(1, 2)
+calculator.subtract(1, 2)
+calculator.divide(1, 2)
+calculator.multiply(1, 2)
+
+
+#------------------------------------------------
+# Classes
+
+class Phone:
+
+    def __init__(self, brand, price):
+        self.brand = brand
+        self.price = price
+
+    def call(self, phone_number):
+        print(f"{self.brand} is calling {phone_number}")
+
+    def __str__(self) -> str:
+        return f"{self.brand} \n Price =  {self.price}"
+
+iphone = Phone("Iphone", 1400)
+samsung = Phone("Samsung", 1500)
+
+print(iphone.brand)
+print(iphone.price)
+iphone.call("123123123")
+print(samsung)
+
+#------------------------------------------------
+# Dates
+
+import datetime
+
+print(datetime.date.today())
+print(datetime.datetime.now())
+print(datetime.datetime.now().year)
+print(datetime.datetime.now().day)
+
+
+now = datetime.datetime.now()
+
+now.strftime("%d/%m/%Y %H:%M:%S")
+
+print(now) #Printing formated date
+
+
+#------------------------------------------------
+# Working with files
+
+file = open("./data.csv", "r+") # r+ means reading/writing
+file.write("id, name, email\n")
+file.write("1, Juan, email@test.com\n")
+
+print(file.read()) #read the entire file
+
+for line in file:
+    print(line)
+
+print(file.readlines())
+
+file.close()
+
+#good way to work with files. We dont need to open and cloes file, it does it
+import os.path
+
+filename = "./data.csv"
+
+if os.path.isfile(filename):
+    with open(filename, "r") as file:
+        print(file.readlines())
+else:
+    print("File not found")
+
+# with open("./data.csv", "r+") as file:
+#     print(file.readlines())
+
+
+#------------------------------------------------
+# Fetching data API calls
+
+from urllib import request
+import json
+
+r = request.urlopen("http://www.official-joke-api.appspot.com/random_ten")
+data = r.read()
+jsonData = json.loads(data)
+# print(jsonData)
+
+class Joke:
+    def __init__(self, setup, punchline):
+        self.setup = setup
+        self.punchline = punchline
+
+    def __str__(self) -> str:
+        return f"{self.setup} {self.punchline}\n"
+
+jokes = []
+
+for j in jsonData:
+    setup = j["setup"]
+    punchline = j["punchline"]
+    joke = Joke(setup, punchline)
+    jokes.append(joke)
+
+# print(jokes)
+
+
 
 
 
